@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>健康記録入力</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-4">
+    <h1>健康記録入力</h1>
+    <form th:action="@{/records}" th:object="${healthRecord}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <div class="mb-3">
+            <label class="form-label">日付</label>
+            <input type="date" class="form-control" th:field="*{date}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">睡眠時間</label>
+            <input type="number" step="0.5" class="form-control" th:field="*{sleepHours}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">疲労度（1〜5）</label>
+            <input type="number" min="1" max="5" class="form-control" th:field="*{fatigueLevel}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">メモ</label>
+            <textarea class="form-control" th:field="*{memo}"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">保存</button>
+        <a href="/records" class="btn btn-secondary">キャンセル</a>
+    </form>
+</div>
+</body>
+</html>
