@@ -3,6 +3,7 @@ package com.github.sakumas.healthtracker.controller;
 import com.github.sakumas.healthtracker.entity.User;
 import com.github.sakumas.healthtracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @GetMapping("/register")
     public String registerForm(Model model) {
         model.addAttribute("user", new User());
@@ -25,6 +29,7 @@ public class UserController {
 
     @PostMapping("/register")
     public String register(@ModelAttribute User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.save(user);
         return "redirect:/records";
     }
