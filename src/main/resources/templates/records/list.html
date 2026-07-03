@@ -21,6 +21,7 @@
             <p class="mb-1"><strong>睡眠時間：</strong><span th:text="${record.sleepHours}"></span></p>
             <p class="mb-1"><strong>疲労度：</strong><span th:text="${record.fatigueLevel}"></span></p>
             <p class="mb-0"><strong>メモ：</strong><span th:text="${record.memo}"></span></p>
+            <a th:href="@{/records/{id}/edit(id=${record.id})}" class="btn btn-sm btn-warning mt-2">編集</a>
         </div>
     </div>
 </div>

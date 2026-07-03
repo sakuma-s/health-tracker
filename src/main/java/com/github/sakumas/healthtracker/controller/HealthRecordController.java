@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -45,6 +42,23 @@ public class HealthRecordController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
+        healthRecord.setUser(user);
+        healthRecordService.save(healthRecord);
+        return "redirect:/records";
+    }
+    @GetMapping("/{id}/edit")
+    public String editForm(@PathVariable Long id, Model model) {
+        HealthRecord healthRecord = healthRecordService.findById(id);
+        model.addAttribute("healthRecord", healthRecord);
+        return "records/form";
+    }
+
+    @PostMapping("/{id}/update")
+    public String update(@PathVariable Long id, @ModelAttribute HealthRecord healthRecord) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
+        healthRecord.setId(id);
         healthRecord.setUser(user);
         healthRecordService.save(healthRecord);
         return "redirect:/records";
