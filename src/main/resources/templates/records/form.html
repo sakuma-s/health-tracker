@@ -9,7 +9,6 @@
 <body>
 <div class="container mt-4">
     <h1>健康記録入力</h1>
-    <p th:text="${healthRecord.date}"></p>
     <form th:if="${healthRecord.id != null}"
           th:action="@{/records/{id}/update(id=${healthRecord.id})}"
           th:object="${healthRecord}" method="post">
