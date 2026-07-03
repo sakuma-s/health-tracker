@@ -42,6 +42,10 @@ public class HealthRecordController {
 
     @PostMapping
     public String save(@ModelAttribute HealthRecord healthRecord) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
+        healthRecord.setUser(user);
         healthRecordService.save(healthRecord);
         return "redirect:/records";
     }
