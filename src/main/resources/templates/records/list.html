@@ -9,8 +9,12 @@
 <body>
 <div class="container mt-4">
     <h1>健康記録一覧</h1>
-    <a href="/records/new" class="btn btn-primary mb-3">新規登録</a>
-
+    <div class="d-flex gap-2 mb-3">
+        <a href="/records/new" class="btn btn-primary">新規登録</a>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-outline-danger">ログアウト</button>
+        </form>
+    </div>
     <div th:each="record : ${healthRecords}" class="card mb-3">
         <div class="card-body">
             <p class="mb-1"><strong>日付：</strong><span th:text="${record.date}"></span></p>
