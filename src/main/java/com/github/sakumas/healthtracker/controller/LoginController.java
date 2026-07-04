@@ -9,4 +9,8 @@ public class LoginController {
     public String loginForm() {
         return "user/login";
     }
+    @GetMapping("/")
+    public String index() {
+        return "index";
+    }
 }
