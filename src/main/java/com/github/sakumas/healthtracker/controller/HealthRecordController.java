@@ -63,4 +63,9 @@ public class HealthRecordController {
         healthRecordService.save(healthRecord);
         return "redirect:/records";
     }
+    @PostMapping("/{id}/delete")
+    public String delete(@PathVariable Long id) {
+        healthRecordService.deleteById(id);
+        return "redirect:/records";
+    }
 }
