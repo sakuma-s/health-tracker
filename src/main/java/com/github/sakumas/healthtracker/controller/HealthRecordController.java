@@ -4,10 +4,12 @@ import com.github.sakumas.healthtracker.entity.HealthRecord;
 import com.github.sakumas.healthtracker.entity.User;
 import com.github.sakumas.healthtracker.repository.UserRepository;
 import com.github.sakumas.healthtracker.service.HealthRecordService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -23,7 +25,6 @@ public class HealthRecordController {
 
     @GetMapping
     public String list(Model model) {
-        // 後でログイン中のユーザーを取得する処理を追加
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
@@ -38,7 +39,10 @@ public class HealthRecordController {
     }
 
     @PostMapping
-    public String save(@ModelAttribute HealthRecord healthRecord) {
+    public String save(@Valid @ModelAttribute HealthRecord healthRecord, BindingResult result) {
+        if (result.hasErrors()) {
+            return "records/form";
+        }
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
@@ -54,7 +58,10 @@ public class HealthRecordController {
     }
 
     @PostMapping("/{id}/update")
-    public String update(@PathVariable Long id, @ModelAttribute HealthRecord healthRecord) {
+    public String update(@PathVariable Long id,@Valid @ModelAttribute HealthRecord healthRecord, BindingResult result) {
+        if (result.hasErrors()) {
+            return "records/form";
+        }
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));

@@ -1,6 +1,10 @@
 package com.github.sakumas.healthtracker.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
@@ -17,15 +21,21 @@ public class HealthRecord {
     private User user;
 
     @Column(nullable = false)
+    @NotNull(message = "日付を入力してください")
     private LocalDate date;
 
     @Column
+    @NotNull(message = "睡眠時間を入力してください")
     private Double sleepHours;
 
     @Column
+    @NotNull(message = "疲労度を入力してください")
+    @Min(value = 1, message = "疲労度は1以上で入力してください")
+    @Max(value = 5, message = "疲労度は5以下で入力してください")
     private Integer fatigueLevel;
 
     @Column
+    @Size(max = 255, message = "メモは255文字以内で入力してください")
     private String memo;
 
     public Long getId() {
