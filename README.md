@@ -6,9 +6,9 @@
 ## 使用技術
 | カテゴリ | 技術 |
 |---|---|
-| バックエンド | Java 21, Spring Boot 3, Spring Security, Spring Data JPA |
+| バックエンド  | Java 21, Spring Boot 4.1.0, Spring Security, Spring Data JPA |
+| データベース  | MySQL（ローカル）/ MariaDB（本番） |
 | フロントエンド | Thymeleaf, Bootstrap 5.3.8 |
-| データベース | MySQL |
 | インフラ | AWS Lightsail |
 | バージョン管理 | Git, GitHub |
 | 開発環境 | IntelliJ IDEA, Windows 11 |
@@ -28,7 +28,35 @@
 ![ER図](docs/images/er-diagram.png)
 
 ## 環境構築手順
-（後で追記）
+### 必要な環境
+- Java 21
+- MySQL 8.0以上
+- Maven
 
+### 手順
+1. リポジトリをクローン
+```bash
+git clone https://github.com/sakuma-s/health-tracker.git
+```
+
+2. データベースを作成
+```sql
+CREATE DATABASE health_tracker;
+```
+
+3. application.propertiesを作成
+`src/main/resources/application.properties`に以下を記載:
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/health_tracker
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+spring.jpa.hibernate.ddl-auto=update
+spring.mvc.format.date=yyyy-MM-dd
+```
+
+4. アプリを起動
+```bash
+./mvnw spring-boot:run
+```
 ## デプロイURL
-（後で追記）
+[http://54.199.112.224:8080](http://54.199.112.224:8080)
