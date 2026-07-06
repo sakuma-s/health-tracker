@@ -56,8 +56,13 @@ spring.mvc.format.date=yyyy-MM-dd
 
 4. アプリを起動
 ```bash
+# Mac/Linux
 ./mvnw spring-boot:run
+
+# Windows
+mvnw spring-boot:run
 ```
+
 ## デプロイURL
 [http://54.199.112.224:8080](http://54.199.112.224:8080)
 
