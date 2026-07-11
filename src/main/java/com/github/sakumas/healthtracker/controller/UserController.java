@@ -46,7 +46,14 @@ public class UserController {
     @PostMapping("/register")
     public String register(@ModelAttribute User user,
                            HttpServletRequest request,
-                           HttpServletResponse response) {
+                           HttpServletResponse response,
+                           Model model) {
+
+        //重複チェック
+        if (userService.findByUsername(user.getUsername()).isPresent()) {
+            model.addAttribute("error", "このユーザー名はすでに使用されています");
+            return "user/register";
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.save(user);
 
