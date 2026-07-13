@@ -15,6 +15,31 @@
             <button type="submit" class="btn btn-outline-danger">ログアウト</button>
         </form>
     </div>
+    <!-- 週平均 -->
+    <div class="mb-4">
+        <h5>週平均</h5>
+        <div th:if="${#lists.isEmpty(weeklyAverages)}" class="text-muted">
+            データがありません
+        </div>
+        <div th:each="weekly : ${weeklyAverages}" class="card mb-2">
+            <div class="card-body">
+                <p class="mb-1">
+                    <strong>期間：</strong>
+                    <span th:text="${#temporals.format(weekly.startDate, 'yyyy/MM/dd')}"></span>
+                    〜
+                    <span th:text="${#temporals.format(weekly.endDate, 'yyyy/MM/dd')}"></span>
+                </p>
+                <p class="mb-1">
+                    <strong>睡眠平均：</strong>
+                    <span th:text="${#numbers.formatDecimal(weekly.avgSleepHours, 1, 1)}"></span>時間
+                </p>
+                <p class="mb-0">
+                    <strong>疲労度平均：</strong>
+                    <span th:text="${#numbers.formatDecimal(weekly.avgFatigueLevel, 1, 1)}"></span>
+                </p>
+            </div>
+        </div>
+    </div>
     <div th:each="record : ${healthRecords}" class="card mb-3">
         <div class="card-body">
             <p class="mb-1"><strong>日付：</strong><span th:text="${record.date}"></span></p>

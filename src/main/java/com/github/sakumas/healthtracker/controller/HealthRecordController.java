@@ -12,8 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-
 @Controller
 @RequestMapping("/records")
 public class HealthRecordController {
@@ -29,6 +27,7 @@ public class HealthRecordController {
         User user = userService.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
         model.addAttribute("healthRecords", healthRecordService.findByUserOrderByDateDesc(user));
+        model.addAttribute("weeklyAverages", healthRecordService.getWeeklyAverages(user));
         return "records/list";
     }
 

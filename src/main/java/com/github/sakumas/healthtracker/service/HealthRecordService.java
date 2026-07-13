@@ -1,5 +1,6 @@
 package com.github.sakumas.healthtracker.service;
 
+import com.github.sakumas.healthtracker.dto.WeeklyAverage;
 import com.github.sakumas.healthtracker.entity.HealthRecord;
 import com.github.sakumas.healthtracker.entity.User;
 
@@ -14,5 +15,7 @@ public interface HealthRecordService {
     void save(HealthRecord healthRecord);
 
     void deleteById(Long id);
+
+    List<WeeklyAverage> getWeeklyAverages(User user);
 
 }

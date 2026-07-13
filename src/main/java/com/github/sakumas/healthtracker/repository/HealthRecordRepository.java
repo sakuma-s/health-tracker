@@ -9,4 +9,5 @@ import java.util.List;
 public interface HealthRecordRepository extends JpaRepository<HealthRecord, Long> {
 
     List<HealthRecord> findByUserOrderByDateDesc(User user);
+    List<HealthRecord> findByUserOrderByDateAsc(User user);
 }
