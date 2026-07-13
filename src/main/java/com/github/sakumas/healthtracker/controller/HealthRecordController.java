@@ -28,7 +28,7 @@ public class HealthRecordController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
-        model.addAttribute("healthRecords", healthRecordService.findByUser(user));
+        model.addAttribute("healthRecords", healthRecordService.findByUserOrderByDateDesc(user));
         return "records/list";
     }
 

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface HealthRecordService {
 
-    List<HealthRecord> findByUser(User user);
+    List<HealthRecord> findByUserOrderByDateDesc(User user);
 
     HealthRecord findById(Long id);
 
