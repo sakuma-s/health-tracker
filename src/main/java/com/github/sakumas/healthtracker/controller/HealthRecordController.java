@@ -70,9 +70,11 @@ public class HealthRecordController {
                 sleep.append(",");
                 fatigue.append(",");
             }
-            labels.append("\"").append(w.getStartDate()).append("〜").append(w.getEndDate()).append("\"");
-            sleep.append(w.getAvgSleepHours());
-            fatigue.append(w.getAvgFatigueLevel());
+            labels.append("\"")
+                    .append(w.getStartDate().getMonthValue()).append("/").append(w.getStartDate().getDayOfMonth())
+                    .append("〜")
+                    .append(w.getEndDate().getMonthValue()).append("/").append(w.getEndDate().getDayOfMonth())
+                    .append("\"");
         }
         labels.append("]");
         sleep.append("]");
