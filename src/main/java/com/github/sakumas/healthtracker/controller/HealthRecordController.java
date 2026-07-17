@@ -1,5 +1,6 @@
 package com.github.sakumas.healthtracker.controller;
 
+import com.github.sakumas.healthtracker.dto.WeeklyAverage;
 import com.github.sakumas.healthtracker.entity.HealthRecord;
 import com.github.sakumas.healthtracker.entity.User;
 import com.github.sakumas.healthtracker.repository.UserRepository;
@@ -12,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/records")
 public class HealthRecordController {
@@ -20,16 +23,6 @@ public class HealthRecordController {
     private HealthRecordService healthRecordService;
     @Autowired
     private UserRepository userService;
-
-    @GetMapping
-    public String list(Model model) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userService.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
-        model.addAttribute("healthRecords", healthRecordService.findByUserOrderByDateDesc(user));
-        model.addAttribute("weeklyAverages", healthRecordService.getWeeklyAverages(user));
-        return "records/list";
-    }
 
     @GetMapping("/new")
     public String newForm(Model model) {
@@ -55,7 +48,41 @@ public class HealthRecordController {
         model.addAttribute("healthRecord", healthRecord);
         return "records/form";
     }
+    @GetMapping
+    public String list(Model model) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
+        model.addAttribute("healthRecords", healthRecordService.findByUserOrderByDateDesc(user));
 
+        List<WeeklyAverage> weeklyAverages = healthRecordService.getWeeklyAverages(user);
+        model.addAttribute("weeklyAverages", weeklyAverages);
+
+        // Chart.js用データ
+        StringBuilder labels = new StringBuilder("[");
+        StringBuilder sleep = new StringBuilder("[");
+        StringBuilder fatigue = new StringBuilder("[");
+
+        for (int i = 0; i < weeklyAverages.size(); i++) {
+            WeeklyAverage w = weeklyAverages.get(i);
+            if (i > 0) {
+                labels.append(",");
+                sleep.append(",");
+                fatigue.append(",");
+            }
+            labels.append("\"").append(w.getStartDate()).append("〜").append(w.getEndDate()).append("\"");
+            sleep.append(w.getAvgSleepHours());
+            fatigue.append(w.getAvgFatigueLevel());
+        }
+        labels.append("]");
+        sleep.append("]");
+        fatigue.append("]");
+        model.addAttribute("weeklyLabels", labels.toString());
+        model.addAttribute("weeklySleep", sleep.toString());
+        model.addAttribute("weeklyFatigue", fatigue.toString());
+
+        return "records/list";
+    }
     @PostMapping("/{id}/update")
     public String update(@PathVariable Long id,@Valid @ModelAttribute HealthRecord healthRecord, BindingResult result) {
         if (result.hasErrors()) {
