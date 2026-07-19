@@ -27,6 +27,7 @@ public class HealthRecordController {
     @GetMapping("/new")
     public String newForm(Model model) {
         model.addAttribute("healthRecord" , new HealthRecord());
+        model.addAttribute("actionUrl", "/records"); //追加
         return "records/form";
     }
 
@@ -46,6 +47,7 @@ public class HealthRecordController {
     public String editForm(@PathVariable Long id, Model model) {
         HealthRecord healthRecord = healthRecordService.findById(id);
         model.addAttribute("healthRecord", healthRecord);
+        model.addAttribute("actionUrl", "/records/" + id + "/update");
         return "records/form";
     }
     @GetMapping
