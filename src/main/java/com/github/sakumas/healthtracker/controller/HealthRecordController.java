@@ -77,6 +77,8 @@ public class HealthRecordController {
                     .append("〜")
                     .append(w.getEndDate().getMonthValue()).append("/").append(w.getEndDate().getDayOfMonth())
                     .append("\"");
+            sleep.append(w.getAvgSleepHours());
+            fatigue.append(w.getAvgFatigueLevel());
         }
         labels.append("]");
         sleep.append("]");
