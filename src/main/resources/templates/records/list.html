@@ -101,15 +101,47 @@
                     label: '睡眠平均（時間）',
                     data: sleep,
                     borderColor: 'rgba(54, 162, 235, 1)',
-                    tension: 0.1
+                    tension: 0.1,
+                    yAxisID: 'ySleep' //左軸を指定
                 },// 1本目
                 {
                     label: '疲労度平均',
                     data: fatigue,
                     borderColor: 'rgba(255, 99, 132, 1)',
-                    tension: 0.1
+                    tension: 0.1,
+                    yAxisID: 'yFatigue' //右軸を指定
                 }// 2本目
             ]
+        },
+        options: {
+            scales: {
+                y: {
+                    display: false //デフォルト軸を非表示
+                },
+                ySleep: {
+                    type: 'linear',
+                    position: 'left',
+                    min: 0,
+                    max: 10,
+                    title: {
+                        display: true,
+                        text: '睡眠時間（時間）'
+                    }
+                },
+                yFatigue: {
+                    type: 'linear',
+                    position: 'right',
+                    min: 1,
+                    max: 5,
+                    title: {
+                        display: true,
+                        text: '疲労度'
+                    },
+                    grid: {
+                        drawOnChartArea: false //右軸のグリット線の非表示
+                    }
+                }
+            }
         }
     });
 </script>
