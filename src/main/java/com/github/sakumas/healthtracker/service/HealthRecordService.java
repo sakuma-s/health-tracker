@@ -18,4 +18,5 @@ public interface HealthRecordService {
 
     List<WeeklyAverage> getWeeklyAverages(User user);
 
+    List<HealthRecord> searchByMemo(User user, String keyword);
 }
