@@ -86,4 +86,8 @@ public class HealthRecordServiceImpl implements HealthRecordService {
         }
         return weeklyAverages;
     }
+    @Override
+    public List<HealthRecord> searchByMemo(User user, String keyword) {
+        return healthRecordRepository.findByUserAndMemoContainingOrderByDateDesc(user, keyword);
+    }
 }
