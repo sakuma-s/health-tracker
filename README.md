@@ -8,7 +8,7 @@
 |---------|--------------------------------------------------------------|
 | バックエンド  | Java 21, Spring Boot 4.1.0, Spring Security, Spring Data JPA |
 | データベース  | MySQL（ローカル）/ MariaDB（本番）                                     |
-| フロントエンド | Thymeleaf, Bootstrap 5.3.8, Chart.js                         |
+| フロントエンド | Thymeleaf, Bootstrap 5.3.8, Chart.js, React, TypeScript       |
 | クラウド    | AWS Lightsail （Amazon Linux 2023）                            |
 | OS | Amazon Linux 2023                                            |
 | バージョン管理 | Git, GitHub, GitHub Actions                                  |
@@ -21,7 +21,7 @@
 - 健康記録の編集
 - 健康記録の削除（確認モーダル付き）
 - 入力値バリデーション
-
+- メモキーワードリアルタイム検索（React + TypeScript）※[フロントエンドリポジトリ](https://github.com/sakuma-s/health-tracker-front)
 ## 画面遷移図
 ![画面遷移図](docs/images/screen-transition.png)
 
