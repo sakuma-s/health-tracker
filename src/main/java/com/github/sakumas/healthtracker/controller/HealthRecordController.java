@@ -107,4 +107,12 @@ public class HealthRecordController {
         healthRecordService.deleteById(id);
         return "redirect:/records";
     }
+    @GetMapping("/search")
+    @ResponseBody
+    public List<HealthRecord> search(@RequestParam String keyword) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
+        return healthRecordService.searchByMemo(user, keyword);
+    }
 }
