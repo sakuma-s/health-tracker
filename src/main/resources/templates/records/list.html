@@ -11,17 +11,14 @@
     <h1>健康記録一覧</h1>
     <div class="d-flex justify-content-between align-items-start mb-3">
         <div class="d-flex gap-2">
-        <a href="/records/new" class="btn btn-primary">記録する</a>
-        <form th:action="@{/logout}" method="post">
-            <button type="submit" class="btn btn-outline-danger">ログアウト</button>
-        </form>
-    </div>
-        <div style="width: 300px;">
-            <input type="text" id="memoSearch" class="form-control"
-                   placeholder="メモを検索（例：つかれ）">
-            <div id="searchResults" class="mt-2"></div>
+            <a href="/records/new" class="btn btn-primary">記録する</a>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-outline-danger">ログアウト</button>
+            </form>
         </div>
+        <a href="/search/index.html" class="btn btn-outline-primary">メモ検索</a>
     </div>
+</div>
     <!-- 週平均 -->
     <div class="mb-4">
             <h5>週平均</h5>
@@ -151,37 +148,6 @@
                 }
             }
         }
-    });
-</script>
-<script>
-    document.getElementById('memoSearch').addEventListener('input', function () {
-        const keyword = this.value.trim();
-        const resultsDiv = document.getElementById('searchResults');
-
-        if (!keyword) {
-            resultsDiv.innerHTML = '';
-            return;
-        }
-
-        fetch('/records/search?keyword=' + encodeURIComponent(keyword), {
-            credentials: 'include'
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.length === 0) {
-                    resultsDiv.innerHTML = '<p class="text-muted small">該当なし</p>';
-                    return;
-                }
-                resultsDiv.innerHTML = data.map(record => `
-                <div class="card mb-1">
-                    <div class="card-body py-2 px-3">
-                        <small class="text-muted">${record.date}</small>
-                        <p class="mb-0 small">${record.memo}</p>
-                    </div>
-                </div>
-            `).join('');
-            })
-            .catch(e => console.error(e));
     });
 </script>
 </html>
