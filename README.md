@@ -85,7 +85,7 @@ JUnit5とMockitoを使った単体テストを実装しています。
 - 複数週のデータがそれぞれ正しく計算される
 
 ### 自動化
-GitHub Actionsを使用し、masterへのpush/PR時にテストを自動実行しています。
+GitHub Actionsを使用し、mainへのpush/PR時にテストを自動実行しています。
 
 ### 実行方法
 ```bash
