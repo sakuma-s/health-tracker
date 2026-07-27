@@ -4,15 +4,15 @@
 日々の健康記録（睡眠時間・疲労度・メモ）を管理するWebアプリケーションです。
 
 ## 使用技術
-| カテゴリ    | 技術                                                           |
-|---------|--------------------------------------------------------------|
+| カテゴリ    | 技術                                                          |
+|---------|-------------------------------------------------------------|
 | バックエンド  | Java 21, Spring Boot 4.1.0, Spring Security, Spring Data JPA |
-| データベース  | MySQL（ローカル）/ MariaDB（本番）                                     |
-| フロントエンド | Thymeleaf, Bootstrap 5.3.8, Chart.js, React, TypeScript       |
-| クラウド    | AWS Lightsail （Amazon Linux 2023）                            |
-| OS | Amazon Linux 2023                                            |
-| バージョン管理 | Git, GitHub, GitHub Actions                                  |
-| 開発環境    | IntelliJ IDEA, Windows 11                                    |
+| データベース  | MySQL（ローカル）/ MariaDB（本番）                                    |
+| フロントエンド | Thymeleaf, Bootstrap 5.3.8, Chart.js, React, TypeScript      |
+| クラウド    | AWS Lightsail                           |
+| OS | Amazon Linux 2023                                           |
+| バージョン管理 | Git, GitHub, GitHub Actions                                 |
+| 開発環境    | IntelliJ IDEA, Windows 11                                   |
 
 ## 機能一覧
 - ユーザー登録・ログイン・ログアウト
