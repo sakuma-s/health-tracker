@@ -18,5 +18,4 @@ public class MonthlyAverage {
     public int getMonth() { return month; }
     public double getAvgSleepHours() { return avgSleepHours; }
     public double getAvgFatigueLevel() { return avgFatigueLevel; }
-
 }

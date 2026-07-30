@@ -1,5 +1,6 @@
 package com.github.sakumas.healthtracker.controller;
 
+import com.github.sakumas.healthtracker.dto.MonthlyAverage;
 import com.github.sakumas.healthtracker.dto.WeeklyAverage;
 import com.github.sakumas.healthtracker.entity.HealthRecord;
 import com.github.sakumas.healthtracker.entity.User;
@@ -60,32 +61,54 @@ public class HealthRecordController {
         List<WeeklyAverage> weeklyAverages = healthRecordService.getWeeklyAverages(user);
         model.addAttribute("weeklyAverages", weeklyAverages);
 
+        List<MonthlyAverage> monthlyAverages = healthRecordService.getMonthlyAverages(user);
+        model.addAttribute("monthlyAverages", monthlyAverages);
+
         // Chart.js用データ
-        StringBuilder labels = new StringBuilder("[");
-        StringBuilder sleep = new StringBuilder("[");
-        StringBuilder fatigue = new StringBuilder("[");
+        StringBuilder weeklyLabels = new StringBuilder("[");
+        StringBuilder weeklySleep = new StringBuilder("[");
+        StringBuilder weeklyFatigue = new StringBuilder("[");
 
         for (int i = 0; i < weeklyAverages.size(); i++) {
-            WeeklyAverage w = weeklyAverages.get(i);
+            WeeklyAverage weekly = weeklyAverages.get(i);
             if (i > 0) {
-                labels.append(",");
-                sleep.append(",");
-                fatigue.append(",");
+                weeklyLabels.append(",");
+                weeklySleep.append(",");
+                weeklyFatigue.append(",");
             }
-            labels.append("\"")
-                    .append(w.getStartDate().getMonthValue()).append("/").append(w.getStartDate().getDayOfMonth())
+            weeklyLabels.append("\"")
+                    .append(weekly.getStartDate().getMonthValue()).append("/").append(weekly.getStartDate().getDayOfMonth())
                     .append("〜")
-                    .append(w.getEndDate().getMonthValue()).append("/").append(w.getEndDate().getDayOfMonth())
+                    .append(weekly.getEndDate().getMonthValue()).append("/").append(weekly.getEndDate().getDayOfMonth())
                     .append("\"");
-            sleep.append(w.getAvgSleepHours());
-            fatigue.append(w.getAvgFatigueLevel());
+            weeklySleep.append(weekly.getAvgSleepHours());
+            weeklyFatigue.append(weekly.getAvgFatigueLevel());
         }
-        labels.append("]");
-        sleep.append("]");
-        fatigue.append("]");
-        model.addAttribute("weeklyLabels", labels.toString());
-        model.addAttribute("weeklySleep", sleep.toString());
-        model.addAttribute("weeklyFatigue", fatigue.toString());
+        weeklyLabels.append("]");
+        weeklySleep.append("]");
+        weeklyFatigue.append("]");
+        model.addAttribute("weeklyLabels", weeklyLabels.toString());
+        model.addAttribute("weeklySleep", weeklySleep.toString());
+        model.addAttribute("weeklyFatigue", weeklyFatigue.toString());
+
+        StringBuilder monthLabels = new StringBuilder("[");
+        StringBuilder monthSleep = new StringBuilder("[");
+        StringBuilder monthFatigue = new StringBuilder("[");
+
+        for (int i = 0; i < monthlyAverages.size(); i++) {
+            MonthlyAverage monthly = monthlyAverages.get(i);
+            if (i > 0) {
+                monthLabels.append(",");
+                monthSleep.append(",");
+                monthFatigue.append(",");
+            }
+            monthLabels.append("\"")
+                    .append(monthly.getYear())
+                    .append("/")
+                    .append(monthly.getMonth())
+                    .append("\"");
+        }
+
 
         return "records/list";
     }
