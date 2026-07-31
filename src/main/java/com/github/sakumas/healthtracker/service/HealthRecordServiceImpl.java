@@ -1,5 +1,6 @@
 package com.github.sakumas.healthtracker.service;
 
+import com.github.sakumas.healthtracker.dto.MonthlyAverage;
 import com.github.sakumas.healthtracker.dto.WeeklyAverage;
 import com.github.sakumas.healthtracker.entity.HealthRecord;
 import com.github.sakumas.healthtracker.entity.User;
@@ -9,8 +10,11 @@ import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -85,6 +89,34 @@ public class HealthRecordServiceImpl implements HealthRecordService {
             weekStart = weekStart.plusWeeks(1);
         }
         return weeklyAverages;
+    }
+    @Override
+    public List<MonthlyAverage> getMonthlyAverages(User user) {
+        List<HealthRecord> records = healthRecordRepository.findByUserOrderByDateAsc(user);
+
+        Map<YearMonth, List<HealthRecord>> grouped = records.stream()
+                .collect(Collectors.groupingBy(r -> YearMonth.from(r.getDate())));
+
+        List<MonthlyAverage> monthlyAverages = new ArrayList<>();
+        for (Map.Entry<YearMonth, List<HealthRecord>> entry : grouped.entrySet()) {
+        YearMonth yearMonth = entry.getKey();
+        List<HealthRecord> monthRecords = entry.getValue();
+
+        double avgSleep = monthRecords.stream()
+                .mapToDouble(HealthRecord::getSleepHours)
+                .average()
+                .orElse(0);
+        double avgFatigue = monthRecords.stream()
+                .mapToInt(HealthRecord::getFatigueLevel)
+                .average()
+                .orElse(0);
+
+        monthlyAverages.add(new MonthlyAverage(yearMonth.getYear(), yearMonth.getMonthValue(), avgSleep, avgFatigue));
+
+        }
+        monthlyAverages.sort(Comparator.comparing(m -> m.getYear() * 100 + m.getMonth()));
+
+        return monthlyAverages;
     }
     @Override
     public List<HealthRecord> searchByMemo(User user, String keyword) {

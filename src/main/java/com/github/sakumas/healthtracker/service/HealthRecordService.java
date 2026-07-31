@@ -1,5 +1,6 @@
 package com.github.sakumas.healthtracker.service;
 
+import com.github.sakumas.healthtracker.dto.MonthlyAverage;
 import com.github.sakumas.healthtracker.dto.WeeklyAverage;
 import com.github.sakumas.healthtracker.entity.HealthRecord;
 import com.github.sakumas.healthtracker.entity.User;
@@ -19,4 +20,7 @@ public interface HealthRecordService {
     List<WeeklyAverage> getWeeklyAverages(User user);
 
     List<HealthRecord> searchByMemo(User user, String keyword);
+
+    List<MonthlyAverage> getMonthlyAverages(User user);
+
 }
