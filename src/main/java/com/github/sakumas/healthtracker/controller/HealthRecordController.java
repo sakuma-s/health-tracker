@@ -107,8 +107,15 @@ public class HealthRecordController {
                     .append("/")
                     .append(monthly.getMonth())
                     .append("\"");
+            monthSleep.append(monthly.getAvgSleepHours());
+            monthFatigue.append(monthly.getAvgFatigueLevel());
         }
-
+        monthLabels.append("]");
+        monthSleep.append("]");
+        monthFatigue.append("]");
+        model.addAttribute("monthlyLabels", monthLabels.toString());
+        model.addAttribute("monthlySleep", monthSleep.toString());
+        model.addAttribute("monthlyFatigue", monthFatigue.toString());
 
         return "records/list";
     }
