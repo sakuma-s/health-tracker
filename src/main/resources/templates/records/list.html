@@ -155,10 +155,10 @@
     });
 </script>
 <script>
-        const monthlyChart = document.getElementById('monthlyChartData');
-        const monthlyLabels = JSON.parse(monthlyChart.dataset.labels);
-        const monthlySleepData = JSON.parse(monthlyChart.dataset.sleep);
-        const monthlyFatigue = JSON.parse(monthlyChart.dataset.fatigue);
+        const monthlyChartData = document.getElementById('monthlyChartData');
+        const monthlyLabels = JSON.parse(monthlyChartData.dataset.labels);
+        const monthlySleepData = JSON.parse(monthlyChartData.dataset.sleep);
+        const monthlyFatigue = JSON.parse(monthlyChartData.dataset.fatigue);
 
             new Chart(document.getElementById('monthlyChart'), {
                 type: 'line',
