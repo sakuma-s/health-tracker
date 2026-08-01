@@ -46,14 +46,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
                     <div class="col-md-6">
                         <canvas id="weeklyChart"></canvas>
                     </div>
                     <div class="col-md-6">
                         <canvas id="monthlyChart"></canvas>
                     </div>
-                </div>
             </div>
     </div>
     <!-- Chart.jsデータ -->
@@ -95,9 +93,6 @@
             </div>
         </div>
     </div>
-</div>
-</div>
-</body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
@@ -112,7 +107,7 @@
             labels: labels, // X軸（期間）
             datasets: [
                 {
-                    label: '睡眠週平均(時間)',
+                    label: '睡眠時間(週平均)',
                     data: sleep,
                     borderColor: 'rgba(54, 162, 235, 1)',
                     tension: 0.1,
