@@ -24,8 +24,8 @@ public class HealthRecordServiceImpl implements HealthRecordService {
     private HealthRecordRepository healthRecordRepository;
 
     @Override
-    public List<HealthRecord> findByUserOrderByDateDesc(User user) {
-        return healthRecordRepository.findByUserOrderByDateDesc(user);
+    public List<HealthRecord> findByUserOrderByDateDescIdDesc(User user) {
+        return healthRecordRepository.findByUserOrderByDateDescIdDesc(user);
     }
 
     @Override
