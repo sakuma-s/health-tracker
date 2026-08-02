@@ -4,18 +4,18 @@ public class MonthlyAverage {
 
     private int year;
     private int month;
-    private double avgSleepHours;
+    private double avgSleepMinutes;
     private double avgFatigueLevel;
 
-    public MonthlyAverage(int year, int month, double avgSleepHours, double avgFatigueLevel) {
+    public MonthlyAverage(int year, int month, double avgSleepMinutes, double avgFatigueLevel) {
         this.year = year;
         this.month = month;
-        this.avgSleepHours = avgSleepHours;
+        this.avgSleepMinutes = avgSleepMinutes;
         this.avgFatigueLevel = avgFatigueLevel;
     }
 
     public int getYear() { return year; }
     public int getMonth() { return month; }
-    public double getAvgSleepHours() { return avgSleepHours; }
+    public double getAvgSleepMinutes() { return avgSleepMinutes; }
     public double getAvgFatigueLevel() { return avgFatigueLevel; }
 }

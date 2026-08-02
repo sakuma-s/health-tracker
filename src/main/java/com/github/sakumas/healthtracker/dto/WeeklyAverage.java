@@ -6,18 +6,18 @@ public class WeeklyAverage {
 
     private LocalDate startDate;
     private LocalDate endDate;
-    private double avgSleepHours;
+    private double avgSleepMinutes;
     private double avgFatigueLevel;
 
-    public WeeklyAverage(LocalDate startDate, LocalDate endDate, double avgSleepHours, double avgFatigueLevel) {
+    public WeeklyAverage(LocalDate startDate, LocalDate endDate, double avgSleepMinutes, double avgFatigueLevel) {
         this.startDate = startDate;
         this.endDate = endDate;
-        this.avgSleepHours = avgSleepHours;
+        this.avgSleepMinutes = avgSleepMinutes;
         this.avgFatigueLevel = avgFatigueLevel;
     }
 
     public LocalDate getStartDate() { return startDate; }
     public LocalDate getEndDate() { return endDate; }
-    public double getAvgSleepHours() { return avgSleepHours; }
+    public double getAvgSleepMinutes() { return avgSleepMinutes; }
     public double getAvgFatigueLevel() { return avgFatigueLevel; }
 }

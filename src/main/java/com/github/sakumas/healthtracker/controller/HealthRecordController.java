@@ -33,10 +33,15 @@ public class HealthRecordController {
     }
 
     @PostMapping
-    public String save(@Valid @ModelAttribute HealthRecord healthRecord, BindingResult result) {
+    public String save(
+            @Valid @ModelAttribute HealthRecord healthRecord,
+            BindingResult result,
+            @RequestParam int sleepHoursInput,
+            @RequestParam int sleepMinutesPart) {
         if (result.hasErrors()) {
             return "records/form";
         }
+        healthRecord.setSleepMinutes(sleepHoursInput * 60 + sleepMinutesPart);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
@@ -81,7 +86,7 @@ public class HealthRecordController {
                     .append("〜")
                     .append(weekly.getEndDate().getMonthValue()).append("/").append(weekly.getEndDate().getDayOfMonth())
                     .append("\"");
-            weeklySleep.append(weekly.getAvgSleepHours());
+            weeklySleep.append(weekly.getAvgSleepMinutes());
             weeklyFatigue.append(weekly.getAvgFatigueLevel());
         }
         weeklyLabels.append("]");
@@ -107,7 +112,7 @@ public class HealthRecordController {
                     .append("/")
                     .append(monthly.getMonth())
                     .append("\"");
-            monthSleep.append(monthly.getAvgSleepHours());
+            monthSleep.append(monthly.getAvgSleepMinutes());
             monthFatigue.append(monthly.getAvgFatigueLevel());
         }
         monthLabels.append("]");
@@ -120,10 +125,16 @@ public class HealthRecordController {
         return "records/list";
     }
     @PostMapping("/{id}/update")
-    public String update(@PathVariable Long id,@Valid @ModelAttribute HealthRecord healthRecord, BindingResult result) {
+    public String update(@PathVariable Long id,
+                         @Valid @ModelAttribute HealthRecord healthRecord,
+                         BindingResult result,
+                         @RequestParam int sleepHoursInput,
+                         @RequestParam int sleepMinutesPart) {
         if (result.hasErrors()) {
             return "records/form";
         }
+        healthRecord.setSleepMinutes(sleepHoursInput * 60 + sleepMinutesPart);
+
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
