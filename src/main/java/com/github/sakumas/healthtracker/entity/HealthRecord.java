@@ -25,7 +25,6 @@ public class HealthRecord {
     private LocalDate date;
 
     @Column
-    @NotNull(message = "睡眠時間を入力してください")
     private Integer sleepMinutes;
 
     @Column

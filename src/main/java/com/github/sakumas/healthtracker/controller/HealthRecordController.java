@@ -86,7 +86,7 @@ public class HealthRecordController {
                     .append("〜")
                     .append(weekly.getEndDate().getMonthValue()).append("/").append(weekly.getEndDate().getDayOfMonth())
                     .append("\"");
-            weeklySleep.append(weekly.getAvgSleepMinutes());
+            weeklySleep.append(weekly.getAvgSleepMinutes() / 60.0);
             weeklyFatigue.append(weekly.getAvgFatigueLevel());
         }
         weeklyLabels.append("]");
@@ -112,7 +112,7 @@ public class HealthRecordController {
                     .append("/")
                     .append(monthly.getMonth())
                     .append("\"");
-            monthSleep.append(monthly.getAvgSleepMinutes());
+            monthSleep.append(monthly.getAvgSleepMinutes() / 60.0);
             monthFatigue.append(monthly.getAvgFatigueLevel());
         }
         monthLabels.append("]");

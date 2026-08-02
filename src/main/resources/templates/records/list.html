@@ -37,7 +37,7 @@
                             </p>
                             <p class="mb-1">
                                 <strong>睡眠平均：</strong>
-                                <span th:text="${#numbers.formatDecimal(weekly.avgSleepHours, 1, 1)}"></span>時間
+                                <span th:text="${#numbers.formatInteger(weekly.avgSleepMinutes / 60, 1) + '時間' + #numbers.formatInteger(weekly.avgSleepMinutes % 60, 2) + '分'}"></span>
                             </p>
                             <p class="mb-0">
                                 <strong>疲労度平均：</strong>
@@ -61,7 +61,7 @@
     <div th:each="record : ${healthRecords}" class="card mb-3">
         <div class="card-body">
             <p class="mb-1"><strong>日付：</strong><span th:text="${record.date}"></span></p>
-            <p class="mb-1"><strong>睡眠時間：</strong><span th:text="${record.sleepMinutes / 60 + '時間' + record.sleepMinutes % 60 + '分'}"></span></p>
+            <p><strong>睡眠時間:</strong><span th:text="${#numbers.formatInteger(record.sleepMinutes / 60, 1) + '時間' + #numbers.formatInteger(record.sleepMinutes % 60, 2) + '分'}"></span></p>
             <p class="mb-1"><strong>疲労度：</strong><span th:text="${record.fatigueLevel}"></span></p>
             <p class="mb-0"><strong>メモ：</strong><span th:text="${record.memo}"></span></p>
             <a th:href="@{/records/{id}/edit(id=${record.id})}" class="btn btn-sm btn-warning mt-2">編集</a>
