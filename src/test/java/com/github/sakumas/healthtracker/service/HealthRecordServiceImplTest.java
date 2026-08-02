@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.offset;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -31,12 +32,12 @@ class HealthRecordServiceImplTest {
         User user = new User();
         HealthRecord mondayRecord = new HealthRecord();
         mondayRecord.setDate(LocalDate.of(2026, 7, 6));
-        mondayRecord.setSleepHours(6.0);
+        mondayRecord.setSleepMinutes(360);
         mondayRecord.setFatigueLevel(2);
 
         HealthRecord wendnesdayRecord = new HealthRecord();
         wendnesdayRecord.setDate(LocalDate.of(2026, 7, 8));
-        wendnesdayRecord.setSleepHours(8.0);
+        wendnesdayRecord.setSleepMinutes(480);
         wendnesdayRecord.setFatigueLevel(4);
 
         when(healthRecordRepository.findByUserOrderByDateAsc(user))
@@ -63,7 +64,7 @@ class HealthRecordServiceImplTest {
             User todayUser = new User();
             HealthRecord todayRecord = new HealthRecord();
             todayRecord.setDate(LocalDate.now());//今日の日付
-            todayRecord.setSleepHours(7.0);
+            todayRecord.setSleepMinutes(420);
             todayRecord.setFatigueLevel(3);
             when(healthRecordRepository.findByUserOrderByDateAsc(todayUser))
                     .thenReturn(List.of(todayRecord));
@@ -78,18 +79,18 @@ class HealthRecordServiceImplTest {
         // 1週目：2026/06/29〜2026/07/05
         HealthRecord week1Record1 = new HealthRecord();
         week1Record1.setDate(LocalDate.of(2026, 6, 30));
-        week1Record1.setSleepHours(6.0);
+        week1Record1.setSleepMinutes(480);
         week1Record1.setFatigueLevel(2);
 
         HealthRecord week1Record2 = new HealthRecord();
         week1Record2.setDate(LocalDate.of(2026, 7, 1));
-        week1Record2.setSleepHours(8.0);
+        week1Record2.setSleepMinutes(480);
         week1Record2.setFatigueLevel(4);
 
         // 2週目：2026/07/06〜2026/07/12
         HealthRecord week2Record1 = new HealthRecord();
         week2Record1.setDate(LocalDate.of(2026, 7, 7));
-        week2Record1.setSleepHours(7.0);
+        week2Record1.setSleepMinutes(420);
         week2Record1.setFatigueLevel(3);
 
         when(healthRecordRepository.findByUserOrderByDateAsc(multiUser))
@@ -98,9 +99,9 @@ class HealthRecordServiceImplTest {
         List<WeeklyAverage> multiResult = healthRecordService.getWeeklyAverages(multiUser);
 
         assertThat(multiResult).hasSize(2);
-        assertThat(multiResult.get(0).getAvgSleepHours()).isEqualTo(7.0); // (6.0+8.0)/2
+        assertThat(multiResult.get(0).getAvgSleepMinutes()).isEqualTo(420.0); // (360+480)/2
         assertThat(multiResult.get(0).getAvgFatigueLevel()).isEqualTo(3.0); // (2+4)/2
-        assertThat(multiResult.get(1).getAvgSleepHours()).isEqualTo(7.0);
+        assertThat(multiResult.get(1).getAvgSleepMinutes()).isCloseTo(375.5, offset(0.01));
         assertThat(multiResult.get(1).getAvgFatigueLevel()).isEqualTo(3.0);
     }
     }

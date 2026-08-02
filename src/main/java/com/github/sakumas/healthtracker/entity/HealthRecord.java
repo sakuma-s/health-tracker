@@ -25,8 +25,7 @@ public class HealthRecord {
     private LocalDate date;
 
     @Column
-    @NotNull(message = "睡眠時間を入力してください")
-    private Double sleepHours;
+    private Integer sleepMinutes;
 
     @Column
     @NotNull(message = "疲労度を入力してください")
@@ -62,12 +61,12 @@ public class HealthRecord {
         this.date = date;
     }
 
-    public Double getSleepHours() {
-        return sleepHours;
+    public Integer getSleepMinutes() {
+        return sleepMinutes;
     }
 
-    public void setSleepHours(Double sleepHours) {
-        this.sleepHours = sleepHours;
+    public void setSleepMinutes(Integer sleepMinutes) {
+        this.sleepMinutes = sleepMinutes;
     }
 
     public Integer getFatigueLevel() {
