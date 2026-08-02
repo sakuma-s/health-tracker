@@ -36,8 +36,14 @@ public class HealthRecordController {
     public String save(
             @Valid @ModelAttribute HealthRecord healthRecord,
             BindingResult result,
-            @RequestParam(defaultValue = "0") int sleepHoursInput,
-            @RequestParam(defaultValue = "0") int sleepMinutesPart) {
+            @RequestParam(required = false) Integer sleepHoursInput,
+            @RequestParam(required = false) Integer sleepMinutesPart,
+            Model model) {
+
+        if (sleepHoursInput == null || sleepMinutesPart == null) {
+            model.addAttribute("sleepError", "睡眠時間を入力してください");
+            return "records/form";
+        }
         if (result.hasErrors()) {
             return "records/form";
         }
@@ -61,7 +67,7 @@ public class HealthRecordController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
-        model.addAttribute("healthRecords", healthRecordService.findByUserOrderByDateDesc(user));
+        model.addAttribute("healthRecords", healthRecordService.findByUserOrderByDateDescIdDesc(user));
 
         List<WeeklyAverage> weeklyAverages = healthRecordService.getWeeklyAverages(user);
         model.addAttribute("weeklyAverages", weeklyAverages);
@@ -128,8 +134,13 @@ public class HealthRecordController {
     public String update(@PathVariable Long id,
                          @Valid @ModelAttribute HealthRecord healthRecord,
                          BindingResult result,
-                         @RequestParam(defaultValue = "0") int sleepHoursInput,
-                         @RequestParam(defaultValue = "0") int sleepMinutesPart) {
+                         @RequestParam(required = false) Integer sleepHoursInput,
+                         @RequestParam(required = false) Integer sleepMinutesPart,
+                         Model model) {
+        if (sleepHoursInput == null || sleepMinutesPart == null) {
+            model.addAttribute("sleepError","睡眠時間を入力してください");
+            return "records/form";
+        }
         if (result.hasErrors()) {
             return "records/form";
         }
