@@ -36,8 +36,8 @@ public class HealthRecordController {
     public String save(
             @Valid @ModelAttribute HealthRecord healthRecord,
             BindingResult result,
-            @RequestParam int sleepHoursInput,
-            @RequestParam int sleepMinutesPart) {
+            @RequestParam(defaultValue = "0") int sleepHoursInput,
+            @RequestParam(defaultValue = "0") int sleepMinutesPart) {
         if (result.hasErrors()) {
             return "records/form";
         }
@@ -128,8 +128,8 @@ public class HealthRecordController {
     public String update(@PathVariable Long id,
                          @Valid @ModelAttribute HealthRecord healthRecord,
                          BindingResult result,
-                         @RequestParam int sleepHoursInput,
-                         @RequestParam int sleepMinutesPart) {
+                         @RequestParam(defaultValue = "0") int sleepHoursInput,
+                         @RequestParam(defaultValue = "0") int sleepMinutesPart) {
         if (result.hasErrors()) {
             return "records/form";
         }
