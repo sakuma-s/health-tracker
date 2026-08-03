@@ -20,6 +20,7 @@
 - 健康記録の新規登録
 - 健康記録の編集
 - 健康記録の削除（確認モーダル付き）
+- RESTful APIの実装（健康記録CRUD）
 - 入力値バリデーション
 - メモキーワードリアルタイム検索（React + TypeScript）※[フロントエンドリポジトリ](https://github.com/sakuma-s/health-tracker-front)
 ## 画面遷移図
