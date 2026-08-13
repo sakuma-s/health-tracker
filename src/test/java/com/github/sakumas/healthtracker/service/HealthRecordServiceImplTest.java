@@ -79,7 +79,7 @@ class HealthRecordServiceImplTest {
         // 1週目：2026/06/29〜2026/07/05
         HealthRecord week1Record1 = new HealthRecord();
         week1Record1.setDate(LocalDate.of(2026, 6, 30));
-        week1Record1.setSleepMinutes(480);
+        week1Record1.setSleepMinutes(360);
         week1Record1.setFatigueLevel(2);
 
         HealthRecord week1Record2 = new HealthRecord();
@@ -101,7 +101,7 @@ class HealthRecordServiceImplTest {
         assertThat(multiResult).hasSize(2);
         assertThat(multiResult.get(0).getAvgSleepMinutes()).isEqualTo(420.0); // (360+480)/2
         assertThat(multiResult.get(0).getAvgFatigueLevel()).isEqualTo(3.0); // (2+4)/2
-        assertThat(multiResult.get(1).getAvgSleepMinutes()).isCloseTo(375.5, offset(0.01));
+        assertThat(multiResult.get(1).getAvgSleepMinutes()).isCloseTo(420.0,offset(0.01));
         assertThat(multiResult.get(1).getAvgFatigueLevel()).isEqualTo(3.0);
     }
     }
