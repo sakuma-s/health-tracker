@@ -37,17 +37,21 @@ public class HealthRecordController {
             @Valid @ModelAttribute HealthRecord healthRecord,
             BindingResult result,
             @RequestParam(required = false) Integer sleepHoursInput,
-            @RequestParam(required = false) Integer sleepMinutesPart,
-            Model model) {
+            @RequestParam(required = false) Integer sleepMinutesPart
+            ) {
 
-        if (sleepHoursInput == null || sleepMinutesPart == null) {
-            model.addAttribute("sleepError", "睡眠時間を入力してください");
-            return "records/form";
-        }
+        SleepTime sleepTime = resolveSleepTime(sleepHoursInput, sleepMinutesPart);
+
         if (result.hasErrors()) {
             return "records/form";
         }
-        healthRecord.setSleepMinutes(sleepHoursInput * 60 + sleepMinutesPart);
+
+        if (sleepTime.hours() == null) {
+           healthRecord.setSleepMinutes(null);
+        } else {
+            healthRecord.setSleepMinutes(sleepTime.hours() * 60 + sleepTime.minutes());
+        }
+
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
@@ -135,16 +139,21 @@ public class HealthRecordController {
                          @Valid @ModelAttribute HealthRecord healthRecord,
                          BindingResult result,
                          @RequestParam(required = false) Integer sleepHoursInput,
-                         @RequestParam(required = false) Integer sleepMinutesPart,
-                         Model model) {
-        if (sleepHoursInput == null || sleepMinutesPart == null) {
-            model.addAttribute("sleepError","睡眠時間を入力してください");
-            return "records/form";
-        }
+                         @RequestParam(required = false) Integer sleepMinutesPart
+                         ) {
+
+
+        SleepTime sleepTime = resolveSleepTime(sleepHoursInput, sleepMinutesPart);
+
         if (result.hasErrors()) {
             return "records/form";
         }
-        healthRecord.setSleepMinutes(sleepHoursInput * 60 + sleepMinutesPart);
+
+        if (sleepTime.hours() == null) {
+            healthRecord.setSleepMinutes(null);
+        } else {
+            healthRecord.setSleepMinutes(sleepTime.hours() * 60 + sleepTime.minutes());
+        }
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByUsername(username)
@@ -154,6 +163,18 @@ public class HealthRecordController {
         healthRecordService.save(healthRecord);
         return "redirect:/records";
     }
+
+    record SleepTime(Integer hours, Integer minutes) {}
+    private SleepTime resolveSleepTime(Integer hoursInput, Integer minutesPart) {
+        if (hoursInput == null) {
+            return new SleepTime(null, null);
+        }
+        if (minutesPart == null) {
+            return new SleepTime(hoursInput, 0);
+        }
+        return new SleepTime(hoursInput, minutesPart);
+    }
+
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable Long id) {
         healthRecordService.deleteById(id);

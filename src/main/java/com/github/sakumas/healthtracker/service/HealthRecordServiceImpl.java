@@ -75,6 +75,7 @@ public class HealthRecordServiceImpl implements HealthRecordService {
                 // 週が完結していない場合はスキップ
                 if (weekEnd.isBefore(LocalDate.now())) {
                     double avgSleep = weekRecords.stream()
+                            .filter(healthRecord -> healthRecord.getSleepMinutes() != null)
                             .mapToInt(HealthRecord::getSleepMinutes)
                             .average()
                             .orElse(0);
@@ -103,6 +104,7 @@ public class HealthRecordServiceImpl implements HealthRecordService {
         List<HealthRecord> monthRecords = entry.getValue();
 
         double avgSleep = monthRecords.stream()
+                .filter(healthRecord -> healthRecord.getSleepMinutes() != null)
                 .mapToDouble(HealthRecord::getSleepMinutes)
                 .average()
                 .orElse(0);
