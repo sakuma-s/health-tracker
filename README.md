@@ -23,6 +23,7 @@
 - RESTful APIの実装（健康記録CRUD）
 - 入力値バリデーション
 - メモキーワードリアルタイム検索（React + TypeScript）※[フロントエンドリポジトリ](https://github.com/sakuma-s/health-tracker-front)
+- 睡眠時間は時間のみの入力にも対応（分は自動で0として保存）
 ## 画面遷移図
 ![画面遷移図](docs/images/screen-transition.png)
 
@@ -74,16 +75,32 @@ mvnw spring-boot:run
 | さはら   | 123 |
 
 ## テスト
-JUnit5とMockitoを使った単体テストを実装しています。
+JUnit5とMockitoを使った単体テスト、MockMvcを使った結合テストを実装しています。
+
 
 ### テスト対象
 - WeeklyAverageの計算ロジック（HealthRecordServiceImpl）
 - ユーザー登録ロジック（UserServiceImpl）
+- 睡眠記録の保存処理（HealthRecordController）
+- 睡眠時間の入力値を保存用に変換するロジック（resolveSleepTime）
 ### テストケース
+
+**Service層**
 - 週平均が正しく計算される
 - レコードが空の場合は空リストを返す
 - 今週のデータは表示されない
 - 複数週のデータがそれぞれ正しく計算される
+
+**Controller統合テスト**
+- 新規登録フォームを開いたときに200が返ること
+- 保存してほしい中身の検証（時間のみ入力。分は自動で0として保存する）
+- 時間分の未入力パターンの検証
+
+**resolveSleepTimeロジック単体テスト**
+- 時間のみ入力した場合
+- 時間と分ともに未入力
+- 時間と分の両方が入力されている
+
 
 ### 自動化
 GitHub Actionsを使用し、mainへのpush/PR時にテストを自動実行しています。
