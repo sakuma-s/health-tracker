@@ -165,7 +165,7 @@ public class HealthRecordController {
     }
 
     record SleepTime(Integer hours, Integer minutes) {}
-    private SleepTime resolveSleepTime(Integer hoursInput, Integer minutesPart) {
+    SleepTime resolveSleepTime(Integer hoursInput, Integer minutesPart) {
         if (hoursInput == null) {
             return new SleepTime(null, null);
         }
