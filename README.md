@@ -20,9 +20,8 @@
 - 健康記録の新規登録
 - 健康記録の編集
 - 健康記録の削除（確認モーダル付き）
-- RESTful APIの実装（健康記録CRUD）
+- JSON APIによるメモキーワードのリアルタイム検索（React + TypeScript）※[フロントエンドリポジトリ](https://github.com/sakuma-s/health-tracker-front)
 - 入力値バリデーション
-- メモキーワードリアルタイム検索（React + TypeScript）※[フロントエンドリポジトリ](https://github.com/sakuma-s/health-tracker-front)
 - 睡眠時間は時間のみの入力にも対応（分は自動で0として保存）
 ## 画面遷移図
 ![画面遷移図](docs/images/screen-transition.png)
