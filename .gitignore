@@ -32,3 +32,11 @@ build/
 ### VS Code ###
 .vscode/
 src/main/resources/application.properties
+
+# Eclipse
+.metadata/
+Servers/
+*.launch
+.settings/
+.classpath
+.project
