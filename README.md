@@ -23,10 +23,10 @@
 - JSON APIによるメモキーワードのリアルタイム検索（React + TypeScript）※[フロントエンドリポジトリ](https://github.com/sakuma-s/health-tracker-front)
 - 入力値バリデーション
 - 睡眠時間は時間のみの入力にも対応（分は自動で0として保存）
-## 画面遷移図
+## 画面遷移図(修正予定)
 ![画面遷移図](docs/images/screen-transition.png)
 
-## ER図
+## ER図(修正予定)
 ![ER図](docs/images/er-diagram.png)
 
 ## 環境構築手順
@@ -108,14 +108,6 @@ MockMvcを使用してHTTPリクエストを発行し、Controllerの処理と�
 * 新規登録フォームへのGETリクエストで200が返る
 * 睡眠時間を時間のみ入力した場合、分を0として保存処理に渡す
 * 睡眠時間を未入力にした場合、nullとして保存処理に渡す
-
-### 実行方法
-
-```bash
-./mvnw test
-```
-
-
 
 ### 自動化
 GitHub Actionsを使用し、mainへのpush/PR時にテストを自動実行しています。
